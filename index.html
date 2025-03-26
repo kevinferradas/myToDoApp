@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My TO-DO APP</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class ="encabezado">
+            <h1> My TO-DO APP </h1>
+            <i class="fa-solid fa-list-check"></i>    
+        </div>
+    </header>
+    <main>
+        <section>
+            <form action="#" name="formActividad" class="formActividad">
+                <p>Introducir tarea y definir estado </p>
+                <div class = "divActividad">
+                    <input type="text" 
+                    name="actividad" 
+                    id="actividad"
+                    placeholder="Ingrese la actividad">
+                    <select name="estado" >
+                        <option value="pendientes" selected>Pendiente </option>
+                        <option value="ejecucion" >En ejecución</option>
+                        <option value="finalizadas" >Finalizada</option>
+                    </select>
+                <input type="submit" value="Añadir Tarea">
+                </div>
+                
+
+            </form>
+            
+        </section>
+
+        <!-- Pendientes -->
+        <section >
+            <h2>Pendientes</h2>
+            <div id="pendientes"></div>
+
+        </section>
+
+        <!-- En ejecución -->
+        <section >
+            <h2>En ejecución</h2>
+            <div id="ejecucion"></div>
+
+        </section>
+
+        <!-- En ejecución -->
+        <section >
+            <h2>Finalizadas </h2>
+            <div id="finalizadas"></div>
+
+        </section>
+
+    </main>
+    <script src="js/script.js"></script>
+</body>
+</html>
