@@ -10,6 +10,8 @@ const finalizadas = document.getElementById("finalizadas")
 let listaMensajesPendientes = []
 let listaMensajesEjecucion = []
 let listaMensajesFinalizadas = []
+let listaBasureroPendiente = []
+let listaProvisionalPendiente=[]
 
 formActividad.addEventListener("submit", (e) => {
 
@@ -17,18 +19,21 @@ formActividad.addEventListener("submit", (e) => {
     let actividad = formActividad["actividad"].value
     let estado =  formActividad["estado"].value
    
+    listaProvisionalPendiente.push(actividad)
 
-   
     // Pendientes
     if (estado == "pendientes") { 
+        
         let mensajePendiente = `<div class ="actividadPendientes">
+        
         <p>${actividad} </p>
-        <i onclick="borrarPendiente(${listaMensajesPendientes.length})" class="fa-solid fa-trash" style="color: red ;"></i>
+        <div>
+        <i onclick="moverPendientesaEjecucion(${listaProvisionalPendiente.indexOf(actividad)}) " class="fa-solid fa-person-digging" style="color: darksalmon ;"></i>
+        <i onclick="borrarPendiente(${listaProvisionalPendiente.indexOf(actividad)})" class="fa-solid fa-trash" style="color: red ;"></i>
+        </div>
     </div> `
 
-    listaMensajesPendientes.push(mensajePendiente)
-    actualizarPendientes()
-            
+    actualizarPendientes(mensajePendiente)        
     }
 
     // En ejecución
@@ -48,7 +53,10 @@ formActividad.addEventListener("submit", (e) => {
     else  { 
         let mensajeFinalizadas = `<div class ="actividadFinalizadas">
         <p>${actividad} </p>
+        <div>
+        <i onclick="moverAejecucion(${listaMensajesPendientes.length}) " class="fa-solid fa-person-digging" style="color: darksalmon ;"></i>
         <i onclick="borrarFinalizadas(${listaMensajesFinalizadas.length})" class="fa-solid fa-trash" style="color: red ;"></i>
+        </div>
     </div> `
 
     listaMensajesFinalizadas.push(mensajeFinalizadas)
@@ -59,30 +67,68 @@ formActividad.addEventListener("submit", (e) => {
     
 })
 
+
+function moverPendientesaEjecucion (j){
+
+    // Recorremos los elementos de "listaMensajeUsuario"
+    for (let i = 0; i<listaMensajesPendientes.length;i++){
+
+        if (i==j){ 
+            borrarPendiente(i)
+            listaMensajesEjecucion.push(listaMensajesPendientes[i]) 
+            listaMensajesPendientes.splice(i,1)
+    }
+
+    actualizarPendientes()
+    actualizarEjecucion()
+
+}}
+
+
+
+//FUNCIONES
 // PENDIENTES
+
 function borrarPendiente(j) {
 
     // Recorremos los elementos de "listaMensajeUsuario"
     for (let i = 0; i<listaMensajesPendientes.length;i++){
 
-        if (i==j){ listaMensajesPendientes[i]= ""}
+        if (i==j){ 
+            // listaMensajesPendientes.splice(i,1)
+            listaProvisionalPendiente.splice(i,1)}
+        }
+
+        actualizarPendientes()
     }
-
-    actualizarPendientes()
-
-}
 
 // Declaramos la función 
-function actualizarPendientes() {
+function actualizarPendientes(message) {
 
+    listaMensajesPendientes = []
     pendientes.innerHTML =""
+
+    for (actividad of listaProvisionalPendiente){
+        message = `<div class ="actividadPendientes">
+        
+        <p>${actividad} </p>
+        <div>
+        <i onclick="moverPendientesaEjecucion(${listaProvisionalPendiente.indexOf(actividad)}) " class="fa-solid fa-person-digging" style="color: darksalmon ;"></i>
+        <i onclick="borrarPendiente(${listaProvisionalPendiente.indexOf(actividad)})" class="fa-solid fa-trash" style="color: red ;"></i>
+        </div>
+        
+    </div> `
+    listaMensajesPendientes.push(message)
+    }
+
     for (mensajes of listaMensajesPendientes){
 
-        if(mensajes !="") // Solo se mostraran los mensajes que no sean strings vacíos
-        {pendientes.innerHTML += mensajes}
-        
+        {pendientes.innerHTML += mensajes}   
     }
-}
+}   
+
+
+
 
 // EJECUCIÓN
 function borrarEjecucion(j) {
