@@ -34,7 +34,7 @@ $select_pre->execute(array($_SESSION['id_usuario']));
 
 /* 4. Obtención de los valores
 Se obtienen todas las filas que resultaron de la consulta en un
- arreglo. Cada fila representa una tarea asociada al usuario.
+ arreglo. Cada fila representa una tarea asociada al usuario.Hola
 */
 $array_filas = $select_pre->fetchAll();
 
