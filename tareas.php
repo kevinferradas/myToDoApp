@@ -8,6 +8,8 @@ require_once 'controlador/connection.php';
 PDO (PHP Data Objects) para obtener todas las tareas 
 asociadas a un usuario específico en una tabla llamada tareas */
 
+$userId = 1;
+
 /* 1. Definir la sentencia (query)
 
 Se define una consulta SQL con un marcador de posición ?, 
@@ -30,14 +32,18 @@ Se ejecuta la consulta, reemplazando el ? en la sentencia por el valor
   actualmente conectado). Se usa un array porque execute() 
   puede recibir múltiples parámetros si hay varios ?.
 */
-$select_pre->execute(array($_SESSION['id_usuario']));
+$select_pre->execute([$userId]);
+// $select_pre->execute(array($_SESSION['id_usuario']));
 
 /* 4. Obtención de los valores
 Se obtienen todas las filas que resultaron de la consulta en un
  arreglo. Cada fila representa una tarea asociada al usuario.Hola
 */
-$array_filas = $select_pre->fetchAll();
 
+$array_filas = $select_pre->fetchAll();
+// echo '<pre>';
+// print_r($array_filas);
+// echo '</pre>';
 
 
 ?>
@@ -56,73 +62,97 @@ $array_filas = $select_pre->fetchAll();
         <section>
             <h2>Nuestras tareas</h2>
             
+            
+                <!-- Pendientes -->
+                <div id="pendientes">
+                    <h3>Pendientes</h3>
+                        <?php foreach ($array_filas as $fila) : ?>
 
-            <h3>Pendientes</h3>
-            <div id="pendientes">
-            <?php foreach ($array_filas as $fila) {
-                if ($fila['estado'] === 'pendientes') {
+                            <?php if ($fila['estado'] === 'pendientes') : ?> 
+
+                                <p> <?= htmlspecialchars($fila['tarea'], ENT_QUOTES, "UTF-8")  ?> </p>
+                            <?php  endif; ?> 
+                        <?php endforeach ?>
+
+                </div>
+
+                <!-- En ejecución -->  
+                <div id="ejecucion">
+                    <h3>En ejecución</h3>
+
+                    <?php foreach ($array_filas as $fila) : ?>
+
+                    <?php if ($fila['estado'] === 'ejecucion') : ?> 
+
+                        <p> <?= htmlspecialchars($fila['tarea'], ENT_QUOTES, "UTF-8")  ?> </p>
+                    <?php  endif; ?> 
+                    <?php endforeach ?>
+
+                    </div>
+                    
+                <!-- Finalizadas -->
+                <div id="finalizadas">
+                    <h3>Finalizadas </h3>
+                    
+                    <?php foreach ($array_filas as $fila) : ?>
+
+                    <?php if ($fila['estado'] === 'finalizadas') : ?> 
+
+                        <p> <?= htmlspecialchars($fila['tarea'], ENT_QUOTES, "UTF-8")  ?> </p>
+                    <?php  endif; ?> 
+                    <?php endforeach ?> 
+                </div>
                 
-                echo '<p>' . htmlspecialchars($fila['tarea'], ENT_QUOTES, 'UTF-8') . '</p>';
-            }
-            }?>
-       
-                
-
-
-    
-
-
-
-
-            <!-- En ejecución -->
-            <div>
-                <h3>En ejecución</h2>
-                <div id="ejecucion"></div>
-            </div>
-
-            <!-- En ejecución -->
-            <div>
-                <h3>Finalizadas </h2>
-                <div id="finalizadas"></div>
-            </div>
-            <?php endforeach ?>
+        
         </section>
 
         <section>
+            
+        <?php  if($_GET):   ?>
+            <!-- FORMULARIO PARA MODIFICAR TAREA Y/O SU ESTADO -->
             <h2>Modifica tu tarea</h2>
-            <!-- FORMULARIO PARA INGRESAR TAREA Y SU ESTADO -->
-            <!-- El formulario enviará la información al fichero update.php
+
+            <!-- El formulario enviará la información al fic
+             hero update.php
             y lo hará mediante el método POST. -->
-                <form action="update.php" method="post" class="formColores">
-                    <!-- <input type="hidden" name="id_color" value="<?= $_GET['id'] ?>"> -->
-                    <fieldset>
-                        <div>
-                            <label for="tarea">Nombre del usuario</label>
-                            <input type="text" id="tarea" name="tarea" value="<?= $_GET['tarea'] ?>" maxlength="50">
-                        </div>
-                        <div>
-                            <select name="estado" id="estado">
-                                <option value="pendientes" selected>Pendiente </option>
-                                <option value="ejecucion" >En ejecución</option>
-                                <option value="finalizadas" >Finalizada</option>
-                            </select>
-                        </div>
-                        <div>
-                            <button type="submit">Modificar tarea</button>
-                            <button type="reset">Borrar</button> 
+                <form action="update.php" method="post" class="formActividad">
+                <!-- <input type="hidden" name="id_color" value="<?//= $_GET['id'] ?>"> -->
+                <fieldset>
+                    <div>
+                        <label for="tarea">Tarea a realizar:</label>
+                        <input type="text" 
+                        id="tarea" 
+                        name="tarea"
+                        value = "<?= $_GET['tarea'] ?>"
+                        placeholder="Ingrese la actividad">
+                    </div>
+                    <div>
+                        <select name="estado" id="estado" value = "<?= $_GET['estado'] ?>">
+                            <option value="pendientes">Pendiente </option>
+                            <option value="ejecucion" >En ejecución</option>
+                            <option value="finalizadas" >Finalizada</option>
+                        </select>
                         
-                        </div>
-                    </fieldset>
+                    </div>
+                    <div>
+                        <button type="submit">Modificar tarea</button>
+                        <button type="reset">Borrar tarea</button>
+                    </div>
+                    
+                </fieldset>
 
                 </form>
-
-            <h2>Introducir tarea y definir estado</h2>
-            <!-- FORMULARIO PARA INGRESAR TAREA Y SU ESTADO -->
-             
-             <!-- -- Al no poner acción, no hay transición hacia otra página
-             -- Al no poner método, el navegador usa GET por defecto. -->
+        
+        <?php else : ?>
             
-            <form action="#" name="formInsert" class="formInsert">
+
+            <!-- FORMULARIO PARA INGRESAR TAREA Y SU ESTADO -->
+            <h2>Introducir tarea y definir estado</h2>
+ 
+             <!-- -- Al no poner acción, no hay transición hacia otra página
+             -- Al no poner método, el navegador usa el método GET por defecto. -->
+            
+            <form action="#" name="formInsert" class="formActividad">
             
                 <!-- Enviamos el id_usuario conectado a través del método GET  -->
                 <input type="hidden" name="id_usuario" value="<?= $_SESSION['id_usuario'] ?>">
@@ -135,7 +165,7 @@ $array_filas = $select_pre->fetchAll();
 
                 <fieldset>
                     <div>
-                        <label for="tarea">Tarea:</label>
+                        <label for="tarea">Tarea a realizar:</label>
                         <input type="text" 
                         id="tarea" 
                         name="tarea"
@@ -155,19 +185,11 @@ $array_filas = $select_pre->fetchAll();
                     </div>
                     
                 </fieldset>
-
-             
-                <div class = "divActividad">
-                    <input type="text" 
-                    name="actividad" 
-                    id="actividad"
-                    placeholder="Ingrese la actividad">
-                    
-                </div>
                 
 
             </form>
-            
+        <?php endif ?>
+
         </section>
 
 
