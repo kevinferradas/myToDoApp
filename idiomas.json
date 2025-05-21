@@ -1,0 +1,16 @@
+{
+  "ESP": {
+    "lang": "es",
+    "title": "Mi gestor de tareas"
+  },
+
+  "CAT": {
+    "lang": "ca",
+    "title": "El meu gestor de tasques"
+  },
+
+  "ENG": {
+    "lang": "en",
+    "title": "My task manager"
+  }
+}

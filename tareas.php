@@ -11,8 +11,8 @@ asociadas a un usuario específico en una tabla llamada tareas */
 /* 1. Definir la sentencia (query)
 
 Se define una consulta SQL con un marcador de posición ?, 
-lo que indica que se usará una variable (en este caso, el id_usuario) 
-más adelante. Esto ayuda a prevenir inyecciones SQL.
+lo que indica que se usará una variable (en este caso, el
+ id_usuario) más adelante. Esto ayuda a prevenir inyecciones SQL.
 */
 $select = "SELECT * FROM tareas WHERE id_usuario = ?;";
 
@@ -52,21 +52,117 @@ $array_filas = $select_pre->fetchAll();
 <body>
     <?php include_once 'modulos/header.php';?>
     <main>
+
         <section>
+            <h2>Nuestras tareas</h2>
+            
+
+            <h3>Pendientes</h3>
+            <div id="pendientes">
+            <?php foreach ($array_filas as $fila) {
+                if ($fila['estado'] === 'pendientes') {
+                
+                echo '<p>' . htmlspecialchars($fila['tarea'], ENT_QUOTES, 'UTF-8') . '</p>';
+            }
+            }?>
+       
+                
+
+
+    
+
+
+
+
+            <!-- En ejecución -->
+            <div>
+                <h3>En ejecución</h2>
+                <div id="ejecucion"></div>
+            </div>
+
+            <!-- En ejecución -->
+            <div>
+                <h3>Finalizadas </h2>
+                <div id="finalizadas"></div>
+            </div>
+            <?php endforeach ?>
+        </section>
+
+        <section>
+            <h2>Modifica tu tarea</h2>
             <!-- FORMULARIO PARA INGRESAR TAREA Y SU ESTADO -->
-            <form action="#" name="formActividad" class="formActividad">
-                <p>Introducir tarea y definir estado </p>
+            <!-- El formulario enviará la información al fichero update.php
+            y lo hará mediante el método POST. -->
+                <form action="update.php" method="post" class="formColores">
+                    <!-- <input type="hidden" name="id_color" value="<?= $_GET['id'] ?>"> -->
+                    <fieldset>
+                        <div>
+                            <label for="tarea">Nombre del usuario</label>
+                            <input type="text" id="tarea" name="tarea" value="<?= $_GET['tarea'] ?>" maxlength="50">
+                        </div>
+                        <div>
+                            <select name="estado" id="estado">
+                                <option value="pendientes" selected>Pendiente </option>
+                                <option value="ejecucion" >En ejecución</option>
+                                <option value="finalizadas" >Finalizada</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="submit">Modificar tarea</button>
+                            <button type="reset">Borrar</button> 
+                        
+                        </div>
+                    </fieldset>
+
+                </form>
+
+            <h2>Introducir tarea y definir estado</h2>
+            <!-- FORMULARIO PARA INGRESAR TAREA Y SU ESTADO -->
+             
+             <!-- -- Al no poner acción, no hay transición hacia otra página
+             -- Al no poner método, el navegador usa GET por defecto. -->
+            
+            <form action="#" name="formInsert" class="formInsert">
+            
+                <!-- Enviamos el id_usuario conectado a través del método GET  -->
+                <input type="hidden" name="id_usuario" value="<?= $_SESSION['id_usuario'] ?>">
+
+                <!-- En viamos el token del usuario conectado a través del método GET -->
+                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+
+                <!-- Método del pote de miel ( algo así) -->
+                <input type="text" name="web" style="display:none">
+
+                <fieldset>
+                    <div>
+                        <label for="tarea">Tarea:</label>
+                        <input type="text" 
+                        id="tarea" 
+                        name="tarea"
+                        placeholder="Ingrese la actividad">
+                    </div>
+                    <div>
+                        <select name="estado" id="estado">
+                            <option value="pendientes" selected>Pendiente </option>
+                            <option value="ejecucion" >En ejecución</option>
+                            <option value="finalizadas" >Finalizada</option>
+                        </select>
+                        
+                    </div>
+                    <div>
+                        <button type="submit">Añadir tarea</button>
+                        <button type="reset">Borrar tarea</button>
+                    </div>
+                    
+                </fieldset>
+
+             
                 <div class = "divActividad">
                     <input type="text" 
                     name="actividad" 
                     id="actividad"
                     placeholder="Ingrese la actividad">
-                    <select name="estado" >
-                        <option value="pendientes" selected>Pendiente </option>
-                        <option value="ejecucion" >En ejecución</option>
-                        <option value="finalizadas" >Finalizada</option>
-                    </select>
-                <input type="submit" value="Añadir Tarea">
+                    
                 </div>
                 
 
@@ -74,26 +170,7 @@ $array_filas = $select_pre->fetchAll();
             
         </section>
 
-        <!-- Pendientes -->
-        <section >
-            <h2>Pendientes</h2>
-            <div id="pendientes"></div>
 
-        </section>
-
-        <!-- En ejecución -->
-        <section >
-            <h2>En ejecución</h2>
-            <div id="ejecucion"></div>
-
-        </section>
-
-        <!-- En ejecución -->
-        <section >
-            <h2>Finalizadas </h2>
-            <div id="finalizadas"></div>
-
-        </section>
 
     </main>
     <script src="js/script.js"></script>
