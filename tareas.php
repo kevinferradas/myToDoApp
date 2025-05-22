@@ -68,7 +68,7 @@ $array_filas = $select_pre->fetchAll();
                     <h3>Pendientes</h3>
                         <?php foreach ($array_filas as $fila) : ?>
 
-                            <?php if ($fila['estado'] === 'pendientes') : ?> 
+                            <?php if ($fila['estado'] === 'pendiente') : ?> 
 
                                 <p> <?= htmlspecialchars($fila['tarea'], ENT_QUOTES, "UTF-8")  ?> </p>
                             <?php  endif; ?> 
@@ -96,7 +96,7 @@ $array_filas = $select_pre->fetchAll();
                     
                     <?php foreach ($array_filas as $fila) : ?>
 
-                    <?php if ($fila['estado'] === 'finalizadas') : ?> 
+                    <?php if ($fila['estado'] === 'finalizada') : ?> 
 
                         <p> <?= htmlspecialchars($fila['tarea'], ENT_QUOTES, "UTF-8")  ?> </p>
                     <?php  endif; ?> 
@@ -173,9 +173,9 @@ $array_filas = $select_pre->fetchAll();
                     </div>
                     <div>
                         <select name="estado" id="estado">
-                            <option value="pendientes" selected>Pendiente </option>
+                            <option value="pendiente" selected>Pendiente </option>
                             <option value="ejecucion" >En ejecución</option>
-                            <option value="finalizadas" >Finalizada</option>
+                            <option value="finalizada" >Finalizada</option>
                         </select>
                         
                     </div>
@@ -195,6 +195,6 @@ $array_filas = $select_pre->fetchAll();
 
 
     </main>
-    <script src="js/script.js"></script>
+    <script src="js/tareas.js"></script>
 </body>
 </html>
