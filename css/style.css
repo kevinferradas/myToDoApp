@@ -1,4 +1,3 @@
-/* Alineamos el título y el icono horizontalmente */
 @font-face {
   font-family: "Lato";
   src: url("../fonts/Lato/Lato-Regular.woff2") format("woff2"),
@@ -20,7 +19,7 @@ header {
   background-color: #444;
   padding: 1rem 5vw;
 
-  >div {
+  > div {
     max-width: 1000px;
     margin: 0 auto;
     display: flex;
@@ -39,13 +38,12 @@ header {
         background-color: transparent;
         border: 1px solid white;
         color: white;
-        padding: .2rem;
+        padding: 0.2rem;
         cursor: pointer;
 
-
         &:hover {
-            background-color: white;
-            color: black;
+          background-color: white;
+          color: black;
         }
       }
     }
@@ -56,90 +54,126 @@ h1 {
   text-align: left;
 }
 
-
-
-h2{
-    
-        margin-top: 1rem ;
-        border-bottom: 2px solid darksalmon;   
-}
-.encabezado {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-/* Ajustamos el tamaño y el espacio entre el icono y el texto */
-.encabezado i {
-    margin-left: 10px;
-    font-size: 30px; /* Tamaño del icono */
-/* }
-
 main {
-    margin: 0 auto;
-    max-width: 800px;
-}
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem 5vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
 
-main section:nth-child(2){
-    margin-top: 2rem;
-}
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-.divActividad {
-    display: flex;
-    justify-content: flex-start; /* Alineamos los elementos al inicio */
-    align-items: center;
-    gap: 0; /* Elimina el espacio entre los elementos */
+  fieldset {
+    padding: 1.5rem;
 
-    input[type="text"] {
-        width: 500px; /* Longitud mayor que el select y el boton */
-        padding: 10px;
-        font-size: 14px;
-        border: 1px solid #ccc;
-        border-top-left-radius: 20px;  /* Borde superior izquierdo redondeado */
-        border-bottom-left-radius: 20px; /* Borde inferior izquierdo redondeado */
+    label {
+      display: block;
     }
-
+    input,
     select {
-        width: 150px; /* Ancho del select */
-        padding: 10px;
-        font-size: 14px;
+      width: 100%;
+      padding: 0.5rem 1rem;
+    }
+    div {
+      margin: 0.5rem 0;
     }
 
-    /* Ajustamos el botón de submit */
-    input[type="submit"] {
-        width: 150px; /* Tamaño del botón */
-        padding: 10px;
-        font-size: 14px;
-        background-color: gray;
-        color: white;
-        border: none;
-        border-top-right-radius: 20px; /* Borde superior derecho redondeado */
-        border-bottom-right-radius: 20px; /* Borde inferior derecho redondeado */
-        cursor: pointer;
+    div:last-child {
+      margin: 1rem 0;
+      text-align: center;
     }
 
-    /* Efecto hover para el botón */
-    input[type="submit"]:hover {
-        background-color: #45a049;
+    a{
+      display: block;
+      margin: .5rem 0;
+      text-align: center;
     }
+
+    button {
+      background-color: steelblue;
+      border: none;
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      width: 100%;
+      margin: 1rem 0;
+    }
+  }
 }
 
-.formActividad{
-    p {
-        text-align: center;
-    }
+#errorUsuario,
+#errorPassword,
+#errorEmail,
+#errorColor {
+  border: none;
+  margin: 0.2rem 0 0;
+  color: red;
+  font-size: 0.75rem;
 }
 
-#pendientes,#ejecucion,#finalizadas {
+section > div {
+  margin: 0.5rem 0;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.formActividad {
+  fieldset {
+    margin-top: 0.5rem;
     padding: 1rem;
+
+    div {
+      margin-bottom: 1rem;
     }
 
-.actividadPendientes, .actividadEjecucion, .actividadFinalizadas{
-    display:flex;
-    justify-content: space-between;
-    i{
-        cursor:pointer;
+    div:last-child {
+      display: flex;
+      justify-content: space-between;
     }
+
+    button {
+      padding: 0.5rem 1rem;
+    }
+
+    button[type="submit"] {
+      background-color: greenyellow;
+    }
+    button[type="reset"] {
+      background-color: darksalmon;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
 }
- */
+
+label {
+  display: block;
+}
+
+input {
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.icons {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+.formEnlaces {
+  text-align: center;
+  a {
+    display: block;
+  }
+}
