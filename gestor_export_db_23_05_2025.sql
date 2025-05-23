@@ -30,7 +30,7 @@ CREATE TABLE `tareas` (
   `estado` varchar(25) DEFAULT NULL,
   `id_usuario` int NOT NULL,
   PRIMARY KEY (`id_tarea`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `tareas` (
 
 LOCK TABLES `tareas` WRITE;
 /*!40000 ALTER TABLE `tareas` DISABLE KEYS */;
-INSERT INTO `tareas` VALUES (1,'Estudiar PHP','pendientes',1),(2,'Desarrollar gestor de tareas','ejecucion',1),(3,'Desarrollar aplicación del clima','pendientes',2),(4,'Estudiar Python','finalizadas',2);
+INSERT INTO `tareas` VALUES (1,'Estudiar PHP','pendiente',1),(4,'Estudiar Python','finalizada',2),(9,'Caminar por el parque','ejecucion',1);
 /*!40000 ALTER TABLE `tareas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,4 +90,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-21 18:03:25
+-- Dump completed on 2025-05-23 19:24:02
